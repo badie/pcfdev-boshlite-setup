@@ -1,0 +1,48 @@
+vm_types:
+- name: default
+  cloud_properties: {}
+- name: m3.medium
+  cloud_properties: {}
+- name: m3.large
+  cloud_properties: {}
+
+networks:
+- name: default
+  type: manual
+  subnets:
+  - range: 10.244.0.0/25
+    reserved: [10.244.0.1]
+    gateway: 10.244.0.1
+    static: [10.244.0.2]
+    az: z1
+    cloud_properties: {}
+  - range: 10.244.0.128/25
+    reserved: [10.244.0.129]
+    gateway: 10.244.0.129
+    az: z2
+    cloud_properties: {}
+  - range: 10.244.1.0/25
+    reserved: [10.244.1.1]
+    gateway: 10.244.1.1
+    az: z3
+    cloud_properties: {}
+
+disk_types:
+- name: five
+  disk_size: 5_000
+  cloud_properties: {}
+
+azs:
+- name: z1
+  cloud_properties: {}
+- name: z2
+  cloud_properties: {}
+- name: z3
+  cloud_properties: {}
+
+compilation:
+  workers: 2
+  reuse_compilation_vms: true
+  network: default
+  az: z1
+  cloud_properties: {}
