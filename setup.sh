@@ -51,7 +51,10 @@ start_pcfdev() {
 create_pcf_uaa_client() {
   success "Creating UAA client for cloudcache broker..."
 
-  uaac target uaa.local.pcfdev.io --skip-ssl-validation
+  if ! uaac target uaa.local.pcfdev.io --skip-ssl-validation; then
+    error "Cannot resolve domain \`uaa.local.pcfdev.io\`. Add dns 8.8.8.8 to your nameserver"
+  fi
+
   uaac token client get admin --secret admin-client-secret
 
   if ! uaac clients | grep cloudcache_broker; then
@@ -186,9 +189,9 @@ main() {
 
   install_pcfdev
 
-  # start_pcfdev
+  start_pcfdev
 
-  # create_pcf_uaa_client
+  create_pcf_uaa_client
 
   install_dependencies
 
